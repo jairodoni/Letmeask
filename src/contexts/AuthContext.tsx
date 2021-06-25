@@ -39,8 +39,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
       })
     }
-
   }
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
