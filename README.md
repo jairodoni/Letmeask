@@ -1,7 +1,7 @@
 <div 
   align="center"
   style="
-    background: #29292e;
+    background: #eee;
     border-radius: 1.5rem;
     display: flex;
     alight-itens:center;
@@ -15,15 +15,15 @@
   <h1 align="center">
       <img alt="ignews" title="ignews" src=".github/logo.svg" width="352px" />
   </h1>
-  
-  
-  
-  [![Licence](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE.md)  <img alt="TypeScript" src="https://img.shields.io/badge/typescript-%23007ACC.svg?&style=for-the-badge&logo=typescript&logoColor=white"/> <img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/> <img alt="Next JS" src="https://img.shields.io/badge/nextjs-%23000000.svg?&style=for-the-badge&logo=next.js&logoColor=white"/>
-  
-  
-  
+
+[![Licence](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE.md)
+<img alt="TypeScript" src="https://img.shields.io/badge/typescript-%23007ACC.svg?&style=for-the-badge&logo=typescript&logoColor=white"/>
+<img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
+<img alt="Firebase" src="https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase"/>
+<img alt="SASS" src="https://img.shields.io/badge/SASS-hotpink.svg?&style=for-the-badge&logo=SASS&logoColor=white"/>
+
   <!-- ![GitHub][repository_license_badge] ![React_Badge][web_react_badge] ![Types][typescript_shields] ![Next][next_shields] -->
-  
+
 </div>
 
 <div align="center">
@@ -51,12 +51,8 @@
   </strong>
 </p>
 
-  <h4 align="center"> 
-	🚧  Ig.news 🚀 Em construção...  🚧
-  </h4>
-
 <p align="center">
-  <img alt="ignews" src=".github/ignews.png" width="100%">
+  <img alt="ignews" src=".github/letmeask.png" width="100%">
 </p>
 </div>
 
@@ -64,43 +60,51 @@
 
 ## **💻 Projeto**
 
-Ignews é um blog de tecnologia voltado a programação, com serviço pago mensal, com intenção de manter as pessoas antenadas nas atualidades e recursos que temos atualmente para deselvolvimento de softwares mais eficientes.
+Letmeask é um site que auxilia seus stremmers favoritos ou qualquer pessoa que precise de uma plataforma de gerenciamento de perguntas interagindo com seu publico de forma mais organizada. Letmeask permite criar salas de perguntas onde você pode reunir seu publico para tirar duvidas em tempo real.
 
 #### Features:
 
-- [x] Login com Github mais cadastro do usuário no banco.
-- [x] Acesso aos artigos completos para membros assinantes.
-- [x] Acesso a uma prévia dos artigos aos membros não assinantes.
-- [x] Ativação de assinatura com plano mensal (integração com [FaunaDB][faunadb] e [Stripe][stripe]).
-- [ ] Desativação de assinatura com plano mensal
-- [ ] Tela de Perfil.
+- [x] Login com Google.
+- [x] Pode acessar salas sem logar em uma conta.
+- [x] Não pode fazer perguntas sem fazer login antes.
+- [x] Pode dar like em perguntas.
+- [x] Pode criar salas com sua propria conta estando logado.
+- [x] Pode compartilhar o codigo da sua sala para seu publico.
+- [x] Pode destacar perguntas.
+- [x] Pode marcar perguntas como respondidas.
+- [x] Pode excluir perguntas correspondentes a sala que você criou.
+- [x] Pode encerrar sala deixando-a desativada e inacessivel.
 
 ---
 
 ## **🔖 Layout**
 
-Você pode visualizar o layout do projeto no formato através [desse link](https://www.figma.com/file/PwkMoMxksroWkOkEXCn7OU/ig.news). Lembrando que você irá precisar ter uma conta no [Figma](http://figma.com/).
+Você pode visualizar o layout do projeto no formato através [desse link](https://www.figma.com/file/9BkYiyIdwwILHNDvZczgEd/Letmeask). Lembrando que você irá precisar ter uma conta no [Figma](http://figma.com/).
 
 #### **Web**
 
-  <div style="
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;"
-  >
+  <div>
     <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen01.png" width="100%">
     <br/>
     <br/>
     <img  style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen02.png" width="100%">
     <br/>
     <br/>
-    <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen05.png" width="100%">
+    <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen04.png" width="100%">
     <br/>
+    <br/>
+    <h2>Telas de Admintrador</h2>
     <br/>
     <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen03.png" width="100%">
     <br/>
     <br/>
-    <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen04.png" width="100%">
+    <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen05.png" width="100%">
+    <br/>
+    <br/>
+    <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen06.png" width="100%">
+    <br/>
+    <br/>
+    <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen07.png" width="100%">
   <div>
 
 ---
@@ -110,13 +114,14 @@ Você pode visualizar o layout do projeto no formato através [desse link](https
 #### **Website** ([React][react])
 
 - **[Typescript][typescript]**
-- **[Next.js][next]**
-- **[Next Auth][next_auth]**
-- **[GitHub OAuth][github_oauth]**
-- **[FaunaDB][faunadb]**
-- **[Stripe][stripe]**
-- **[Prismic CMS][prismic]**
-- **[Axios][axios]**
+- **[Firebase][firebase]**
+- **[React Hook Form][react_hook_form]**
+- **[Hook Form Resolvers][resolvers]**
+- **[Yup][yup]**
+- **[Sass][sass]**
+- **[React Hot Toast][react_hot_toast]**
+- **[React Modal][react_modal]**
+- **[React Icons][react_icons]**
 
 > \* Veja o arquivo <kbd>[package.json](./package.json)</kbd>
 
@@ -142,9 +147,11 @@ Após ter o **Node** instalado, instale as dependências do **React** de forma g
 Instale as dependências contidas nos arquivos `package.json` que se encontram na raíz do repositório. Para instalar as dependências, basta abrir o terminal no diretório e digitar o comando:
 
 ```sh
+# Instalando as dependencias:
 $ npm install
 
-# ou
+#  ou
+
 $ yarn
 ```
 
@@ -153,22 +160,35 @@ $ yarn
 ### Executando o WebSite
 
 ```sh
-# Executando o website no modo de desenvolvimento:
-$ npm run dev
+# Executando o website:
+$ npm run start
 
-    OU
+#    ou
 
-# Executando o website no modo de desenvolvimento:
-$ yarn dev
+
+$ yarn start
 ```
+
+<br/>
 
 > Se o browser não abrir automaticamente, acesse: http://localhost:3000.
 
+<br/>
+
 ### Configuraçoes de Ambiente
 
-Você deve procurar 3 chaves na sua conta do Stripe para as variaveis de ambiente, 2 chaves do github oauth, 1 chave na sua conta do FaunaDB para e 2 chaves na sua conta do PrismicCMS.
+Você precisara logar no firebase e gerar um novo projeto e pegar as variaveis de ambiente dele
+para em seguida criar um arquivo ".env.local" para inserir cada chave de segurança que o projeto do firebase
+gerou pra você anteriomente.
+<br/>
 
-> Veja o exemplo de arquivo de configurações de ambiente <kbd>[.env.local.example.txt](./.env.local.example.txt)</kbd> para se orientar melhor sobre quais chaves devem ser configuradas para o ambiente.
+No projeto da sua conta do firebase selecione "Realtime Database" e configure o banco de dados,
+quando o banco de dados estiver pronto coloque as regrar(rules), como exemplo
+siga o arquivo <kbd>[database.rules.json](./database.rules.json)</kbd>.
+
+<br/>
+
+> Veja o exemplo de arquivo de configurações de ambiente <kbd>[.env.local.exemplo.txt](./.env.local.example.txt)</kbd>
 
 ---
 
@@ -177,7 +197,6 @@ Você deve procurar 3 chaves na sua conta do Stripe para as variaveis de ambient
 - [Blog Rocketseat][rocketseat_blog]
 - [Rocketseat][rocketseat_plataforma]
 - [ReactJS][react_doc] | [ReactJS pt-BR][react_doc_ptbr]
-- [Next.js][next]
 - [Node.js][node]
 
 ## **👨‍🚀 Autor**
@@ -220,14 +239,15 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 [react_doc_ptbr]: https://pt-br.reactjs.org/docs/getting-started.html
 [node]: https://nodejs.org/en/
 [vscode]: https://code.visualstudio.com/
-[next_auth]: https://next-auth.js.org
-[stripe]: https://stripe.com/docs
-[faunadb]: https://fauna.com
-[prismic]: https://prismic.io
-[github_oauth]: https://docs.github.com/pt/developers/apps/authorizing-oauth-apps
-[next]: https://nextjs.org/
 [typescript]: https://www.typescriptlang.org/
-[axios]: https://github.com/axios/axios
+[firebase]: https://firebase.google.com
+[react_hook_form]: https://react-hook-form.com
+[resolvers]: https://github.com/react-hook-form/resolvers
+[yup]: https://github.com/jquense/yup
+[react_hot_toast]: https://react-hot-toast.com
+[sass]: https://sass-lang.com
+[react_icons]: https://react-icons.github.io/react-icons/
+[react_modal]: https://github.com/reactjs/react-modal
 [asdf]: https://github.com/asdf-vm/asdf
 [yarn]: https://classic.yarnpkg.com/en/docs/install/#debian-stable
 [stackedit]: https://stackedit.io
