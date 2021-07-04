@@ -1,20 +1,33 @@
-import { FormEvent, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast';
 import { useHistory } from 'react-router-dom'
-import googleIconImg from '../assets/images/google-icon.svg'
-import illustrationImg from '../assets/images/illustration.svg'
-import logoImg from '../assets/images/logo.svg'
+import { useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
 import { Button } from '../components/Button'
 import { useAuth } from '../contexts/AuthContext'
 import { HeadComponent } from "../components/HeadComponent"
+import googleIconImg from '../assets/images/google-icon.svg'
+import illustrationImg from '../assets/images/illustration.svg'
+import logoImg from '../assets/images/logo.svg'
 import { database } from '../services/firebase'
 import "../styles/auth.scss"
 
+interface RoomCode {
+  roomCode: string;
+}
+
+const schemaForm = yup.object().shape({
+  roomCode: yup.string().required('*Codigo obrigatorio')
+})
 
 export default function Home() {
   const { user, signInWithGoogle } = useAuth()
   const history = useHistory();
-  const [roomCode, setRoomCode] = useState('');
+
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schemaForm)
+  });
 
 
   async function handleGoPageHome() {
@@ -33,13 +46,12 @@ export default function Home() {
     }
   }
 
-  async function handleJoinRoom(event: FormEvent) {
-    event.preventDefault();
-    if (roomCode.trim() === '') {
+  async function handleJoinRoom(data: RoomCode) {
+    if (data.roomCode.trim() === '') {
       return;
     }
 
-    const roomRef = await database.ref(`rooms/${roomCode}`).get();
+    const roomRef = await database.ref(`rooms/${data.roomCode}`).get();
 
 
     if (!roomRef.exists()) {
@@ -52,9 +64,8 @@ export default function Home() {
       return;
     }
 
-    history.push(`/rooms/${roomCode}`);
+    history.push(`/rooms/${data.roomCode}`);
   }
-
   return (
     <>
       <HeadComponent title="Login" />
@@ -77,13 +88,22 @@ export default function Home() {
               Crie sua sala com o Google
             </button>
             <div className="separator">ou entre em uma sala</div>
-            <form>
+            <form onSubmit={handleSubmit(handleJoinRoom)}>
+
+
               <input
                 type="text"
                 placeholder="Digite o codigo da sala"
-                onChange={event => setRoomCode(event.target.value)}
+                className={`${errors?.roomCode?.message ? 'error' : ''}`}
+                {...register('roomCode')}
               />
-              <Button type="submit" onClick={handleJoinRoom}>
+              {!!errors.roomCode && (
+                <span>
+                  {errors.roomCode.message}
+                </span>
+              )}
+
+              <Button type="submit" >
                 Entrar na sala
               </Button>
             </form>

@@ -1,25 +1,37 @@
-import { FormEvent, useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
-import { useAuth } from '../contexts/AuthContext'
-import illustrationImg from '../assets/images/illustration.svg'
-import logoImg from '../assets/images/logo.svg'
-import { Button } from '../components/Button'
-import { HeadComponent } from "../components/HeadComponent"
-import { database } from '../services/firebase'
-import "../styles/auth.scss"
+import { Link, useHistory } from 'react-router-dom';
+import * as yup from 'yup';
+import illustrationImg from '../assets/images/illustration.svg';
+import logoImg from '../assets/images/logo.svg';
+import { Button } from '../components/Button';
+import { HeadComponent } from "../components/HeadComponent";
+import { useAuth } from '../contexts/AuthContext';
+import { database } from '../services/firebase';
+import "../styles/auth.scss";
+
+interface NewRoom {
+  titleNewRoom: string;
+}
+
+const schemaForm = yup.object().shape({
+  titleNewRoom: yup.string().required('*Nome da sala obrigatorio').max(150)
+})
 
 export default function NewRoom() {
   const { user } = useAuth();
-  const [newRoom, setNewRoom] = useState('')
-
   const history = useHistory();
 
-  async function handleCreateRoom(event: FormEvent) {
-    event.preventDefault();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schemaForm)
+  });
+
+  async function handleCreateRoom(data: NewRoom) {
 
     //caso o usuario tente criar uma sala sem nome a função para nesse if
-    if (newRoom.trim() === '') {
+    if (data.titleNewRoom.trim() === '') {
       return;
     }
 
@@ -28,7 +40,7 @@ export default function NewRoom() {
       //use "push" para cadastrar uma lista no firebase
       //use "set" caso cadastre uma informação unica
       const firebaseRoom = await roomRef.push({
-        title: newRoom,
+        title: data.titleNewRoom,
         authorId: user?.id,
       });
 
@@ -38,18 +50,18 @@ export default function NewRoom() {
     } else {
       toast.error("Faça login antes de prosseguir.");
     }
-
   }
-  useEffect(() => {
-    const roomCode = localStorage.getItem('@letmeask/room');
-    const room = database.ref(`rooms/${roomCode}`)
 
-    room.get().then(item => {
-      if (user && !item.val().closedAt) {
+  useEffect(() => {
+    async function Validate() {
+      const roomId = localStorage.getItem('@letmeask/room');
+      const roomRef = await database.ref(`rooms/${roomId}`).get();
+
+      if (!user || user && roomRef.exists() && !roomRef.val().closedAt) {
         history.push("/")
       }
-    })
-
+    }
+    Validate();
   }, [user])
 
   return (
@@ -71,12 +83,20 @@ export default function NewRoom() {
           <div className="main-content">
             <img src={logoImg} alt="Letmeask" />
             <h2>Criar uma nova sala</h2>
-            <form onSubmit={handleCreateRoom}>
+            <form onSubmit={handleSubmit(handleCreateRoom)}>
               <input
                 type="text"
                 placeholder="Nome da sala"
-                onChange={event => setNewRoom(event.target.value)}
+                className={`${errors?.titleNewRoom?.message ? 'error' : ''}`}
+                {...register('titleNewRoom')}
               />
+
+              {!!errors.titleNewRoom && (
+                <span style={{ color: "#e73f5d" }}>
+                  {errors.titleNewRoom.message}
+                </span>
+              )}
+
               <Button type="submit">
                 Criar sala
               </Button>

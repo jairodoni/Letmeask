@@ -10,7 +10,7 @@
       align-items: center;
       justify-content: space-between;
 
-      > img {
+      a > img {
         max-height: 45px;
       }
 
@@ -134,15 +134,15 @@
     }
     .none-questions {
       margin: 0 auto;
-      max-width: 400px;
-      height: 700px;
+      max-width: 500px;
       width: 100%;
-
+      height: 550px;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
+      flex-direction: column;
+
       h5 {
         margin-top: 1.1rem;
         font-family: "Poppins", sans-serif;
