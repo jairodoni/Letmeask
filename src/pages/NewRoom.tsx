@@ -92,7 +92,7 @@ export default function NewRoom() {
               />
 
               {!!errors.titleNewRoom && (
-                <span style={{ color: "#e73f5d" }}>
+                <span>
                   {errors.titleNewRoom.message}
                 </span>
               )}
