@@ -72,12 +72,28 @@ export function useRoom(roomId: string) {
             };
           });
 
+          //Ordena por numero de likes
           const questionsSortedByLikeCount = parseQuestions.sort(
             (a, b) => b.likeCount - a.likeCount
           );
 
+          //Seleciona somente perguntas não respondidas
+          const questionsSortedByAnsweredFalse = questionsSortedByLikeCount.filter(
+            (question) => question.isAnswered === false
+          );
+          //Seleciona somente perguntas ja respondidas
+          const questionsSortedByAnsweredTrue = questionsSortedByLikeCount.filter(
+            (question) => question.isAnswered === true
+          );
+
           setTitle(databaseRoom.title);
-          setQuestions(questionsSortedByLikeCount);
+
+          //Adiciona as perguntas não respondidar na lista
+          // e deixa as não respondidas por ultimo
+          setQuestions([
+            ...questionsSortedByAnsweredFalse,
+            ...questionsSortedByAnsweredTrue,
+          ]);
         });
 
         return () => {
