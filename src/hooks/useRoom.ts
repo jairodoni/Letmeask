@@ -18,6 +18,7 @@ type FirebaseQuestions = Record<
         authorId: string;
       }
     >;
+    createdAt: Date;
   }
 >;
 
@@ -40,37 +41,52 @@ export function useRoom(roomId: string) {
   const [questions, setQuestions] = useState<Questions[]>([]);
 
   useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`);
+    async function ListQuestions() {
+      const roomRef = await database.ref(`rooms/${roomId}`).get();
 
-    //"on" serve para ouvir um evento mais de uma vez
-    //troque para "once" para ouvir um evento uma unica vez
-    //e "val" serve para buscar os dados da "room"
-    roomRef.on("value", (room) => {
-      const databaseRoom = room.val();
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+      if (!roomRef.exists()) {
+        return;
+      }
 
-      const parseQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
-        return {
-          id: key,
-          content: value.content,
-          author: value.author,
-          isHighlighted: value.isHighlighted,
-          isAnswered: value.isAnswered,
-          likeCount: Object.values(value.likes ?? {}).length,
-          likeId: Object.entries(value.likes ?? {}).find(
-            ([key, like]) => like.authorId === user?.id
-          )?.[0],
-          createdAt: new Date(),
+      if (roomId) {
+        const roomRef = await database.ref(`rooms/${roomId}`);
+
+        //"on" serve para ouvir um evento mais de uma vez
+        //troque para "once" para ouvir um evento uma unica vez
+        //e "val" serve para buscar os dados da "room"
+        roomRef.on("value", (room) => {
+          const databaseRoom = room.val();
+          const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+
+          const parseQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+            return {
+              id: key,
+              content: value.content,
+              author: value.author,
+              isHighlighted: value.isHighlighted,
+              isAnswered: value.isAnswered,
+              likeCount: Object.values(value.likes ?? {}).length,
+              likeId: Object.entries(value.likes ?? {}).find(
+                ([key, like]) => like.authorId === user?.id
+              )?.[0],
+            };
+          });
+
+          const questionsSorted = parseQuestions.sort(
+            (a, b) => b.likeCount - a.likeCount
+          );
+
+          setTitle(databaseRoom.title);
+          setQuestions(questionsSorted);
+        });
+
+        return () => {
+          roomRef.off("value");
         };
-      });
+      }
+    }
 
-      setTitle(databaseRoom.title);
-      setQuestions(parseQuestions);
-    });
-
-    return () => {
-      roomRef.off("value");
-    };
+    ListQuestions();
   }, [roomId, user?.id]);
 
   return { title, questions };

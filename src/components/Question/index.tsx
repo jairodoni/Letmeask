@@ -10,6 +10,7 @@ interface QuestionProps {
   }
   isAnswered?: boolean;
   isHighlighted?: boolean;
+  createdAt?: Date;
   children?: ReactNode;
 }
 

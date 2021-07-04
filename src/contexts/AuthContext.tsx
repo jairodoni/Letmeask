@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { auth, firebase } from '../services/firebase'
+import { createBrowserHistory } from 'history';
+import { auth, firebase } from '../services/firebase';
+import { useHistory } from "react-router-dom";
 
 interface User {
   id: string;
@@ -10,6 +12,7 @@ interface User {
 interface AuthContextType {
   user: User | undefined;
   signInWithGoogle: () => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 interface AuthContextProviderProps {
@@ -20,6 +23,11 @@ const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User>()
+  const [loading, setLoading] = useState(true)
+
+
+  const urlHistory = createBrowserHistory();
+  const path = urlHistory.location.pathname;
 
   async function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -36,11 +44,16 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         id: uid,
         name: displayName,
         avatar: photoURL,
-
       })
+      setLoading(false);
     }
   }
 
+  async function signOut() {
+    setUser(undefined);
+    await auth.signOut();
+    setLoading(false);
+  }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -65,8 +78,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       unsubscribe();
     }
   }, [])
+
+
+  if (!user && loading && path !== '/') {
+    return <p>Carregando...</p>
+  }
+
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
       {children}
     </AuthContext.Provider>
   )
