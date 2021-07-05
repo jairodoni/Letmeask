@@ -89,6 +89,7 @@ export default function Room() {
                     <button
                       className={`like-button ${question.likeId ? 'liked' : ''}`}
                       type="button"
+                      disabled={!user}
                       aria-label="Marcar como gostei"
                       onClick={() => handleLikeQuestion(question.id, question.likeId)}
                     >
