@@ -56,6 +56,8 @@
 </p>
 </div>
 
+## **✨ Preview**
+#### Sistema Online: https://letmeask-7a0d1.web.app
 ---
 
 ## **💻 Projeto**
@@ -93,7 +95,7 @@ Você pode visualizar o layout do projeto no formato através [desse link](https
     <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen04.png" width="100%">
     <br/>
     <br/>
-    <h2>Telas de Admintrador</h2>
+    <h2>Telas de Administrador</h2>
     <br/>
     <img style="border-radius: 0.5rem;" alt="telasWeb" src=".github/screen03.png" width="100%">
     <br/>
