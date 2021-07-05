@@ -190,7 +190,7 @@ siga o arquivo <kbd>[database.rules.json](./database.rules.json)</kbd>.
 
 <br/>
 
-> Veja o exemplo de arquivo de configurações de ambiente <kbd>[.env.local.exemplo.txt](./.env.local.example.txt)</kbd>
+> Veja o exemplo de arquivo de configurações de ambiente <kbd>[.env.local.exemplo.txt](./.env.local.exemplo.txt)</kbd>
 
 ---
 
