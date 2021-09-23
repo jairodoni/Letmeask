@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { database } from "../services/firebase";
+import { useEffect, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { database } from '../services/firebase';
 
 type FirebaseQuestions = Record<
   string,
@@ -37,7 +37,7 @@ type Questions = {
 
 export function useRoom(roomId: string) {
   const { user } = useAuth();
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState<Questions[]>([]);
 
   useEffect(() => {
@@ -54,23 +54,26 @@ export function useRoom(roomId: string) {
         //"on" serve para ouvir um evento mais de uma vez
         //troque para "once" para ouvir um evento uma unica vez
         //e "val" serve para buscar os dados da "room"
-        roomRef.on("value", (room) => {
+        roomRef.on('value', (room) => {
           const databaseRoom = room.val();
-          const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+          const firebaseQuestions: FirebaseQuestions =
+            databaseRoom.questions ?? {};
 
-          const parseQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
-            return {
-              id: key,
-              content: value.content,
-              author: value.author,
-              isHighlighted: value.isHighlighted,
-              isAnswered: value.isAnswered,
-              likeCount: Object.values(value.likes ?? {}).length,
-              likeId: Object.entries(value.likes ?? {}).find(
-                ([key, like]) => like.authorId === user?.id
-              )?.[0],
-            };
-          });
+          const parseQuestions = Object.entries(firebaseQuestions).map(
+            ([key, value]) => {
+              return {
+                id: key,
+                content: value.content,
+                author: value.author,
+                isHighlighted: value.isHighlighted,
+                isAnswered: value.isAnswered,
+                likeCount: Object.values(value.likes ?? {}).length,
+                likeId: Object.entries(value.likes ?? {}).find(
+                  ([key, like]) => like.authorId === user?.id
+                )?.[0],
+              };
+            }
+          );
 
           //Ordena por numero de likes
           const questionsSortedByLikeCount = parseQuestions.sort(
@@ -78,13 +81,15 @@ export function useRoom(roomId: string) {
           );
 
           //Seleciona somente perguntas não respondidas
-          const questionsSortedByAnsweredFalse = questionsSortedByLikeCount.filter(
-            (question) => question.isAnswered === false
-          );
+          const questionsSortedByAnsweredFalse =
+            questionsSortedByLikeCount.filter(
+              (question) => question.isAnswered === false
+            );
           //Seleciona somente perguntas ja respondidas
-          const questionsSortedByAnsweredTrue = questionsSortedByLikeCount.filter(
-            (question) => question.isAnswered === true
-          );
+          const questionsSortedByAnsweredTrue =
+            questionsSortedByLikeCount.filter(
+              (question) => question.isAnswered === true
+            );
 
           setTitle(databaseRoom.title);
 
@@ -97,7 +102,7 @@ export function useRoom(roomId: string) {
         });
 
         return () => {
-          roomRef.off("value");
+          roomRef.off('value');
         };
       }
     }

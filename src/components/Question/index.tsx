@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
-import cn from 'classnames'
-import "./styles.scss"
+import { ReactNode } from 'react';
+import cn from 'classnames';
+import './styles.scss';
 
 interface QuestionProps {
   content: string;
   author: {
     name: string;
     avatar: string;
-  }
+  };
   isAnswered?: boolean;
   isHighlighted?: boolean;
   createdAt?: Date;
@@ -19,7 +19,7 @@ export function Question({
   content,
   author,
   isAnswered = false,
-  isHighlighted = false
+  isHighlighted = false,
 }: QuestionProps) {
   return (
     <div
@@ -35,10 +35,8 @@ export function Question({
           <img src={author.avatar} alt={author.name} />
           <span>{author.name}</span>
         </div>
-        <div>
-          {children}
-        </div>
+        <div>{children}</div>
       </footer>
     </div>
   );
-};
+}

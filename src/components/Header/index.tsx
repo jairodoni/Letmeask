@@ -2,11 +2,10 @@ import { ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoomCode } from '../RoomCode';
 import { OptionsComponent } from '../OptionsComponent';
-import logoImg from '../../assets/images/logo.svg'
+import logoImg from '../../assets/images/logo.svg';
 import '../../styles/room.scss';
 import { useAuth } from '../../contexts/AuthContext';
 import { database } from '../../services/firebase';
-
 
 interface HeaderProps {
   code: string;
@@ -15,7 +14,7 @@ interface HeaderProps {
 
 export function Header({ children, code }: HeaderProps) {
   const { user } = useAuth();
-  const [route, setRoute] = useState('/')
+  const [route, setRoute] = useState('/');
 
   async function handleGoPageHome() {
     const roomId = localStorage.getItem('@letmeask/room');
@@ -28,7 +27,7 @@ export function Header({ children, code }: HeaderProps) {
 
   useEffect(() => {
     handleGoPageHome();
-  }, [])
+  }, []);
 
   return (
     <header>
@@ -39,18 +38,18 @@ export function Header({ children, code }: HeaderProps) {
         <div>
           <RoomCode code={code} />
           {children}
-          {user &&
+          {user && (
             <>
               <div className="divider" />
-              <OptionsComponent >
+              <OptionsComponent>
                 <button className="avatar">
                   <img src={user?.avatar} alt={user?.name} />
                 </button>
               </OptionsComponent>
             </>
-          }
+          )}
         </div>
       </div>
     </header>
-  )
+  );
 }

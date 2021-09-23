@@ -1,0 +1,9 @@
+build 
+public
+coverage
+package.json
+tsconfig.json
+firebase.ts
+.firebaserc
+.firebase
+

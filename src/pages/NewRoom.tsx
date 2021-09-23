@@ -1,35 +1,38 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
-import { HeadComponent } from "../components/HeadComponent";
+import { HeadComponent } from '../components/HeadComponent';
 import { useAuth } from '../contexts/AuthContext';
 import { database } from '../services/firebase';
-import "../styles/auth.scss";
+import '../styles/auth.scss';
 
 interface NewRoom {
   titleNewRoom: string;
 }
 
 const schemaForm = yup.object().shape({
-  titleNewRoom: yup.string().required('*Nome da sala obrigatorio').max(150)
-})
+  titleNewRoom: yup.string().required('*Nome da sala obrigatorio').max(150),
+});
 
 export default function NewRoom() {
   const { user } = useAuth();
   const history = useHistory();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schemaForm)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaForm),
   });
 
   async function handleCreateRoom(data: NewRoom) {
-
     //caso o usuario tente criar uma sala sem nome a função para nesse if
     if (data.titleNewRoom.trim() === '') {
       return;
@@ -44,11 +47,11 @@ export default function NewRoom() {
         authorId: user?.id,
       });
 
-      localStorage.setItem("@letmeask/room", `${firebaseRoom.key}`);
+      localStorage.setItem('@letmeask/room', `${firebaseRoom.key}`);
 
       history.push(`/admin/rooms/${firebaseRoom.key}`);
     } else {
-      toast.error("Faça login antes de prosseguir.");
+      toast.error('Faça login antes de prosseguir.');
     }
   }
 
@@ -57,27 +60,27 @@ export default function NewRoom() {
       const roomId = localStorage.getItem('@letmeask/room');
       const roomRef = await database.ref(`rooms/${roomId}`).get();
 
-      if (!user || user && roomRef.exists() && !roomRef.val().closedAt) {
-        history.push("/")
+      if (!user || (user && roomRef.exists() && !roomRef.val().closedAt)) {
+        history.push('/');
       }
     }
     Validate();
-  }, [user])
+  }, [user]);
 
   return (
     <>
       <HeadComponent title="Criar sala" />
 
-      <Toaster
-        position="top-center"
-        reverseOrder={true}
-      />
+      <Toaster position="top-center" reverseOrder={true} />
 
       <div id="page-auth">
         <aside>
-          <img src={illustrationImg} alt="Ilustração sinbolizando perguntas e respostas" />
+          <img
+            src={illustrationImg}
+            alt="Ilustração sinbolizando perguntas e respostas"
+          />
           <strong>Crie salas Q&amp;A ao-vivo</strong>
-          <p>Tire  as duvidas da sua audiência em tempo-real</p>
+          <p>Tire as duvidas da sua audiência em tempo-real</p>
         </aside>
         <main>
           <div className="main-content">
@@ -92,14 +95,10 @@ export default function NewRoom() {
               />
 
               {!!errors.titleNewRoom && (
-                <span>
-                  {errors.titleNewRoom.message}
-                </span>
+                <span>{errors.titleNewRoom.message}</span>
               )}
 
-              <Button type="submit">
-                Criar sala
-              </Button>
+              <Button type="submit">Criar sala</Button>
             </form>
             <p>
               Quer entrar em uma sala existente? <Link to="/">clique aqui</Link>
@@ -108,5 +107,5 @@ export default function NewRoom() {
         </main>
       </div>
     </>
-  )
+  );
 }

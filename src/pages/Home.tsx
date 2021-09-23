@@ -1,34 +1,36 @@
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
-import { yupResolver } from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button } from '../components/Button'
-import { useAuth } from '../contexts/AuthContext'
-import { HeadComponent } from "../components/HeadComponent"
-import googleIconImg from '../assets/images/google-icon.svg'
-import illustrationImg from '../assets/images/illustration.svg'
-import logoImg from '../assets/images/logo.svg'
-import { database } from '../services/firebase'
-import "../styles/auth.scss"
+import { Button } from '../components/Button';
+import { useAuth } from '../contexts/AuthContext';
+import { HeadComponent } from '../components/HeadComponent';
+import googleIconImg from '../assets/images/google-icon.svg';
+import illustrationImg from '../assets/images/illustration.svg';
+import logoImg from '../assets/images/logo.svg';
+import { database } from '../services/firebase';
+import '../styles/auth.scss';
 
 interface RoomCode {
   roomCode: string;
 }
 
 const schemaForm = yup.object().shape({
-  roomCode: yup.string().required('*Codigo obrigatorio')
-})
+  roomCode: yup.string().required('*Codigo obrigatorio'),
+});
 
 export default function Home() {
-  const { user, signInWithGoogle } = useAuth()
+  const { user, signInWithGoogle } = useAuth();
   const history = useHistory();
 
-
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schemaForm)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaForm),
   });
-
 
   async function handleGoPageHome() {
     const roomId = localStorage.getItem('@letmeask/room');
@@ -53,14 +55,13 @@ export default function Home() {
 
     const roomRef = await database.ref(`rooms/${data.roomCode}`).get();
 
-
     if (!roomRef.exists()) {
-      toast.error("Esta sala não existe.");
+      toast.error('Esta sala não existe.');
       return;
     }
 
     if (roomRef.val().closedAt) {
-      toast.error("Esta sala foi fechada 😥");
+      toast.error('Esta sala foi fechada 😥');
       return;
     }
 
@@ -71,14 +72,14 @@ export default function Home() {
       <HeadComponent title="Login" />
 
       <div id="page-auth">
-        <Toaster
-          position="top-center"
-          reverseOrder={true}
-        />
+        <Toaster position="top-center" reverseOrder={true} />
         <aside>
-          <img src={illustrationImg} alt="Ilustração sinbolizando perguntas e respostas" />
+          <img
+            src={illustrationImg}
+            alt="Ilustração sinbolizando perguntas e respostas"
+          />
           <strong>Crie salas Q&amp;A ao-vivo</strong>
-          <p>Tire  as duvidas da sua audiência em tempo-real</p>
+          <p>Tire as duvidas da sua audiência em tempo-real</p>
         </aside>
         <main>
           <div className="main-content">
@@ -89,27 +90,19 @@ export default function Home() {
             </button>
             <div className="separator">ou entre em uma sala</div>
             <form onSubmit={handleSubmit(handleJoinRoom)}>
-
-
               <input
                 type="text"
                 placeholder="Digite o codigo da sala"
                 className={`${errors?.roomCode?.message ? 'error' : ''}`}
                 {...register('roomCode')}
               />
-              {!!errors.roomCode && (
-                <span>
-                  {errors.roomCode.message}
-                </span>
-              )}
+              {!!errors.roomCode && <span>{errors.roomCode.message}</span>}
 
-              <Button type="submit" >
-                Entrar na sala
-              </Button>
+              <Button type="submit">Entrar na sala</Button>
             </form>
           </div>
         </main>
       </div>
     </>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { Routes } from "./routes";
-import { AuthContextProvider } from "./contexts/AuthContext";
+import { Routes } from './routes';
+import { AuthContextProvider } from './contexts/AuthContext';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
