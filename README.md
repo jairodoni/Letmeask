@@ -64,7 +64,7 @@
 
 ## **💻 Projeto**
 
-Letmeask é um site que auxilia seus stremmers favoritos ou qualquer pessoa que precise de uma plataforma de gerenciamento de perguntas interagindo com seu publico de forma mais organizada. Letmeask permite criar salas de perguntas onde você pode reunir seu publico para tirar duvidas em tempo real.
+Letmeask é um site que auxilia seus stremmers favoritos ou qualquer pessoa que precise de uma plataforma de gerenciamento de perguntas interagindo com seu publico de forma mais organizada. Letmeask permite criar salas de perguntas onde você pode reunir seu publico para tirar duvidas em tempo real. Letmeask foi um projeto desenvolvido durante o evento "NLW Together" com aulas produzidas pela Rocketseat. E com o tempo recebeu implementações.
 
 #### Features:
 
